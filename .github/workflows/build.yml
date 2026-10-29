@@ -3,12 +3,15 @@
 
 name: Build Crazy Aim APK
 
-on:
-  workflow_dispatch:
-  push:
-    paths:
-      - 'CrazyAimAutoPlayer-AndroidStudio-Source.zip'
-      - '.github/workflows/build.yml'
+      - name: Build APK
+        shell: bash
+        run: |
+          echo "Files extracted:"
+          find project -maxdepth 4 -type f | head -80
+          echo "Checking Gradle project:"
+          find project -type f \( -name settings.gradle -o -name settings.gradle.kts -o -name build.gradle -o -name build.gradle.kts \)
+          gradle -p project assembleDebug --stacktrace --info
+          
 
 jobs:
   build:
